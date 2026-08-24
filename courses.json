@@ -17,41 +17,6 @@
     "bgColor": "bg-amber-500/10",
     "borderColor": "border-amber-500/30",
     "textColor": "text-amber-400",
-    "chapters": [
-      {
-        "id": "hist-ww2",
-        "title": "La Seconde Guerre Mondiale (1939-1945)",
-        "description": "Une guerre d'anéantissement, les grandes étapes du conflit et le bilan moral et humain.",
-        "content": "La Seconde Guerre mondiale est un conflit mondial qui s'est déroulé de 1939 à 1945, opposant les Alliés (Royaume-Uni, URSS, États-Unis, France libre) aux forces de l'Axe (Allemagne nazie, Italie fasciste, Empire du Japon).\n\nDates clés :\n- 1er septembre 1939 : L'Allemagne envahit la Pologne, déclenchant la guerre en Europe.\n- 22 juin 1941 : Opération Barbarossa, l'Allemagne attaque l'URSS.\n- 7 décembre 1941 : Attaque japonaise sur Pearl Harbor, entrée en guerre des États-Unis.\n- 6 juin 1944 : Débarquement allié en Normandie (Opération Overlord).\n- 8 mai 1945 : Capitulation sans condition de l'Allemagne nazie (fin du conflit en Europe).\n- 6 et 9 août 1945 : Bombardements atomiques sur Hiroshima et Nagasaki.\n- 2 septembre 1945 : Capitulation du Japon, fin officielle de la Guerre mondiale.\n\nCaractéristiques du conflit :\n- C'est une guerre totale (mobilisation économique, humaine, scientifique et idéologique).\n- Une guerre d'anéantissement idéologique et raciale marquée par le génocide des Juifs et des Tziganes (Shoah), causant plus de 6 millions de victimes.\n- Le bilan total dépasse les 60 millions de morts, majoritairement des civils.",
-        "questions": [
-          {
-            "id": "q-hist-1",
-            "type": "mcq",
-            "question": "À quelle date s'est déroulé le Débarquement allié en Normandie ?",
-            "options": [
-              "6 juin 1944",
-              "8 mai 1945",
-              "1er septembre 1939",
-              "7 décembre 1941"
-            ],
-            "answer": 0,
-            "explanation": "Le débarquement en Normandie (Opération Overlord) a eu lieu le 6 juin 1944."
-          },
-          {
-            "id": "q-hist-2",
-            "type": "mcq",
-            "question": "Quel événement survenu le 7 décembre 1941 a provoqué l'entrée en guerre des États-Unis ?",
-            "options": [
-              "L'attaque de Pearl Harbor par le Japon",
-              "L'invasion de la Pologne",
-              "La bataille de Stalingrad",
-              "La capitulation de la France"
-            ],
-            "answer": 0,
-            "explanation": "L'attaque surprise de la base navale américaine de Pearl Harbor par le Japon le 7 décembre 1941 a fait entrer les USA dans le conflit."
-          }
-        ]
-      }
-    ]
+    "chapters": []
   }
 ]
