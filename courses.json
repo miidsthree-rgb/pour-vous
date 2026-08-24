@@ -122,49 +122,6 @@
     ]
   },
   {
-    "id": "svt",
-    "name": "SVT & Biologie",
-    "icon": "Dna",
-    "color": "from-emerald-600 to-teal-500",
-    "bgColor": "bg-emerald-500/10",
-    "borderColor": "border-emerald-500/30",
-    "textColor": "text-emerald-400",
-    "chapters": [
-      {
-        "id": "svt-adn",
-        "title": "L'ADN et l'Hérédité",
-        "description": "Structure de la molécule d'ADN, réplication cellulaire, transcription et traduction des protéines.",
-        "content": "L'ADN (Acide Désoxyribonucléique) est le support matériel de l'information génétique dans la cellule.\n\nStructure de l'ADN :\n- La molécule d'ADN est constituée de deux brins en forme de double hélice.\n- Chaque brin est un assemblage de nucléotides.\n- Un nucléotide comprend un groupe phosphate, un sucre (le désoxyribose) et une base azotée.\n- Les 4 bases azotées sont : Adénine (A), Thymine (T), Guanine (G), Cytosine (C).\n- Règle de complémentarité : A s'apparie toujours avec T (2 liaisons hydrogène), et G avec C (3 liaisons hydrogène).\n\nRéplication et Expression des Gènes :\n- La réplication de l'ADN est semi-conservative : chaque brin sert de matrice pour la synthèse d'un brin nouveau. Elle est réalisée par l'ADN polymérase.\n- La transcription a lieu dans le noyau : l'ARN messager (ARNm) est synthétisé à partir du brin transcrit de l'ADN (l'Uracile U remplace la Thymine T).\n- La traduction a lieu dans le cytoplasme au niveau des ribosomes : la séquence de nucléotides est traduite en une chaîne d'acides aminés (protéine) grâce au code génétique (codons de 3 nucléotides).",
-        "questions": [
-          {
-            "id": "q-svt-1",
-            "type": "mcq",
-            "question": "Avec quelle base azotée s'apparie toujours l'Adénine (A) dans l'ADN ?",
-            "options": [
-              "La Thymine (T)",
-              "La Cytosine (C)",
-              "La Guanine (G)",
-              "L'Uracile (U)"
-            ],
-            "answer": 0,
-            "explanation": "Selon la règle de complémentarité des bases dans l'ADN, l'Adénine (A) s'apparie toujours avec la Thymine (T)."
-          },
-          {
-            "id": "q-svt-2",
-            "type": "truefalse",
-            "question": "La réplication de l'ADN est dite semi-conservative.",
-            "options": [
-              "Vrai",
-              "Faux"
-            ],
-            "answer": 0,
-            "explanation": "C'est Vrai ! Chaque molécule fille conserve un brin de la molécule parente d'origine et un brin nouvellement synthétisé."
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "informatique",
     "name": "Informatique & Web",
     "icon": "Code",
