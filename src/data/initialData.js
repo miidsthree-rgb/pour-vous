@@ -1,0 +1,229 @@
+export const INITIAL_DATA = [
+  {
+    id: "maths",
+    name: "Mathématiques",
+    icon: "Calculator",
+    color: "from-blue-600 to-cyan-500",
+    bgColor: "bg-blue-500/10",
+    borderColor: "border-blue-500/30",
+    textColor: "text-blue-400",
+    chapters: [
+      {
+        id: "maths-fonctions",
+        title: "Fonctions & Dérivées",
+        description: "Limites, étude de variations, théorèmes des valeurs intermédiaires et dérivation.",
+        content: `Une fonction f est dite dérivable sur un intervalle I si elle admet une dérivée f'(x) en tout point x de cet intervalle.
+
+Définitions fondamentales :
+- La dérivée d'une fonction f au point a représente le coefficient directeur de la tangente à la courbe en ce point.
+- Formule de la dérivée du produit : (u * v)' = u'v + uv'.
+- Formule de la dérivée du quotient : (u / v)' = (u'v - uv') / v^2.
+- La dérivée de x^n est n * x^(n-1).
+- La dérivée de e^x est e^x.
+- La dérivée de ln(x) est 1/x pour x > 0.
+
+Théorème des Valeurs Intermédiaires (TVI) :
+Si f est une fonction continue sur un intervalle [a, b], alors pour tout réel k compris entre f(a) et f(b), il existe au moins un réel c dans [a, b] tel que f(c) = k. Si la fonction est strictly monotone, ce réel c est unique (Corollaire du TVI).
+
+Extremum local :
+Si f'(x) s'annule en x0 en changeant de signe, alors f admet un extremum local en x0 (maximum si f' passe de positif à négatif, minimum si f' passe de négatif à positif).`,
+        questions: [
+          {
+            id: "q-math-1",
+            type: "mcq",
+            question: "Quelle est la dérivée de la fonction f(x) = x^3 - 4x + 7 ?",
+            options: ["f'(x) = 3x^2 - 4", "f'(x) = 3x^2 - 4x", "f'(x) = x^2 - 4", "f'(x) = 3x^3 - 4"],
+            answer: 0,
+            explanation: "La dérivée de x^3 est 3x^2, la dérivée de -4x est -4, et la dérivée d'une constante (7) est 0. Donc f'(x) = 3x^2 - 4."
+          },
+          {
+            id: "q-math-2",
+            type: "mcq",
+            question: "Quelle est la formule correcte pour la dérivée d'un produit (u * v)' ?",
+            options: ["u'v + uv'", "u'v - uv'", "u' * v'", "(u'v + uv') / v^2"],
+            answer: 0,
+            explanation: "La formule d'un produit de deux fonctions dérivables est (u*v)' = u'v + uv'."
+          },
+          {
+            id: "q-math-3",
+            type: "truefalse",
+            question: "La dérivée de la fonction exponentielle e^x est égale à 1/x.",
+            options: ["Vrai", "Faux"],
+            answer: 1,
+            explanation: "C'est Faux ! La dérivée de e^x est elle-même (e^x). C'est la dérivée de ln(x) qui vaut 1/x."
+          }
+        ]
+      },
+      {
+        id: "maths-probabilites",
+        title: "Probabilités & Variables Aléatoires",
+        description: "Lois de probabilité, espérance, variance et loi binomiale.",
+        content: `Une variable aléatoire X est une application de l'univers Ω dans R.
+
+Concepts clés :
+- L'espérance E(X) représente la valeur moyenne théorique obtenue lors d'un grand nombre de répétitions. E(X) = Σ (xi * P(X = xi)).
+- La variance V(X) mesure la dispersion des valeurs autour de l'espérance. V(X) = E(X^2) - (E(X))^2 (Formule de Koenig-Huygens).
+- L'écart-type σ(X) est la racine carrée de la variance : σ(X) = √V(X).
+
+Loi Binomiale B(n, p) :
+Une épreuve de Bernoulli est une expérience à 2 issues : Succès (probabilité p) et Échec (probabilité 1-p).
+La loi binomiale B(n, p) modélise le nombre de succès lors de n répétitions indépendantes et identiques d'une épreuve de Bernoulli.
+- P(X = k) = (n par k) * p^k * (1-p)^(n-k).
+- Espérance : E(X) = n * p.
+- Variance : V(X) = n * p * (1-p).`,
+        questions: [
+          {
+            id: "q-math-prob-1",
+            type: "mcq",
+            question: "Quelle est l'espérance d'une loi binomiale B(n, p) ?",
+            options: ["E(X) = n * p", "E(X) = n * p * (1-p)", "E(X) = p / n", "E(X) = n^2 * p"],
+            answer: 0,
+            explanation: "Pour une loi binomiale B(n, p), l'espérance vaut n * p."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "histoire",
+    name: "Histoire & Géographie",
+    icon: "Globe",
+    color: "from-amber-600 to-orange-500",
+    bgColor: "bg-amber-500/10",
+    borderColor: "border-amber-500/30",
+    textColor: "text-amber-400",
+    chapters: [
+      {
+        id: "hist-ww2",
+        title: "La Seconde Guerre Mondiale (1939-1945)",
+        description: "Une guerre d'anéantissement, les grandes étapes du conflit et le bilan moral et humain.",
+        content: `La Seconde Guerre mondiale est un conflit mondial qui s'est déroulé de 1939 à 1945, opposant les Alliés (Royaume-Uni, URSS, États-Unis, France libre) aux forces de l'Axe (Allemagne nazie, Italie fasciste, Empire du Japon).
+
+Dates clés :
+- 1er septembre 1939 : L'Allemagne envahit la Pologne, déclenchant la guerre en Europe.
+- 22 juin 1941 : Opération Barbarossa, l'Allemagne attaque l'URSS.
+- 7 décembre 1941 : Attaque japonaise sur Pearl Harbor, entrée en guerre des États-Unis.
+- 6 juin 1944 : Débarquement allié en Normandie (Opération Overlord).
+- 8 mai 1945 : Capitulation sans condition de l'Allemagne nazie (fin du conflit en Europe).
+- 6 et 9 août 1945 : Bombardements atomiques sur Hiroshima et Nagasaki.
+- 2 septembre 1945 : Capitulation du Japon, fin officielle de la Guerre mondiale.
+
+Caractéristiques du conflit :
+- C'est une guerre totale (mobilisation économique, humaine, scientifique et idéologique).
+- Une guerre d'anéantissement idéologique et raciale marquée par le génocide des Juifs et des Tziganes (Shoah), causant plus de 6 millions de victimes.
+- Le bilan total dépasse les 60 millions de morts, majoritairement des civils.`,
+        questions: [
+          {
+            id: "q-hist-1",
+            type: "mcq",
+            question: "À quelle date s'est déroulé le Débarquement allié en Normandie ?",
+            options: ["6 juin 1944", "8 mai 1945", "1er septembre 1939", "7 décembre 1941"],
+            answer: 0,
+            explanation: "Le débarquement en Normandie (Opération Overlord) a eu lieu le 6 juin 1944."
+          },
+          {
+            id: "q-hist-2",
+            type: "mcq",
+            question: "Quel événement survenu le 7 décembre 1941 a provoqué l'entrée en guerre des États-Unis ?",
+            options: ["L'attaque de Pearl Harbor par le Japon", "L'invasion de la Pologne", "La bataille de Stalingrad", "La capitulation de la France"],
+            answer: 0,
+            explanation: "L'attaque surprise de la base navale américaine de Pearl Harbor par le Japon le 7 décembre 1941 a fait entrer les USA dans le conflit."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "svt",
+    name: "SVT & Biologie",
+    icon: "Dna",
+    color: "from-emerald-600 to-teal-500",
+    bgColor: "bg-emerald-500/10",
+    borderColor: "border-emerald-500/30",
+    textColor: "text-emerald-400",
+    chapters: [
+      {
+        id: "svt-adn",
+        title: "L'ADN et l'Hérédité",
+        description: "Structure de la molécule d'ADN, réplication cellulaire, transcription et traduction des protéines.",
+        content: `L'ADN (Acide Désoxyribonucléique) est le support matériel de l'information génétique dans la cellule.
+
+Structure de l'ADN :
+- La molécule d'ADN est constituée de deux brins en forme de double hélice.
+- Chaque brin est un assemblage de nucléotides.
+- Un nucléotide comprend un groupe phosphate, un sucre (le désoxyribose) et une base azotée.
+- Les 4 bases azotées sont : Adénine (A), Thymine (T), Guanine (G), Cytosine (C).
+- Règle de complémentarité : A s'apparie toujours avec T (2 liaisons hydrogène), et G avec C (3 liaisons hydrogène).
+
+Réplication et Expression des Gènes :
+- La réplication de l'ADN est semi-conservative : chaque brin sert de matrice pour la synthèse d'un brin nouveau. Elle est réalisée par l'ADN polymérase.
+- La transcription a lieu dans le noyau : l'ARN messager (ARNm) est synthétisé à partir du brin transcrit de l'ADN (l'Uracile U remplace la Thymine T).
+- La traduction a lieu dans le cytoplasme au niveau des ribosomes : la séquence de nucléotides est traduite en une chaîne d'acides aminés (protéine) grâce au code génétique (codons de 3 nucléotides).`,
+        questions: [
+          {
+            id: "q-svt-1",
+            type: "mcq",
+            question: "Avec quelle base azotée s'apparie toujours l'Adénine (A) dans l'ADN ?",
+            options: ["La Thymine (T)", "La Cytosine (C)", "La Guanine (G)", "L'Uracile (U)"],
+            answer: 0,
+            explanation: "Selon la règle de complémentarité des bases dans l'ADN, l'Adénine (A) s'apparie toujours avec la Thymine (T)."
+          },
+          {
+            id: "q-svt-2",
+            type: "truefalse",
+            question: "La réplication de l'ADN est dite semi-conservative.",
+            options: ["Vrai", "Faux"],
+            answer: 0,
+            explanation: "C'est Vrai ! Chaque molécule fille conserve un brin de la molécule parente d'origine et un brin nouvellement synthétisé."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "informatique",
+    name: "Informatique & Web",
+    icon: "Code",
+    color: "from-purple-600 to-indigo-500",
+    bgColor: "bg-purple-500/10",
+    borderColor: "border-purple-500/30",
+    textColor: "text-purple-400",
+    chapters: [
+      {
+        id: "info-js",
+        title: "JavaScript Moderne (ES6+)",
+        description: "Variables, Promesses, Async/Await, modules et manipulation du DOM.",
+        content: `JavaScript est un langage de programmation interprété, à typage dynamique et orienté objet à prototypes, principalement utilisé pour dynamiser le Web.
+
+Notions clés ES6+ :
+- Déclaration de variables : 'const' pour les constantes non réassignables, 'let' pour les variables à portée de bloc (block scope). Éviter 'var' (portée de fonction, hoisting).
+- Fonctions fléchées : (param) => { ... } offrent une syntaxe concis et lient lexicalement 'this'.
+- Les Promesses (Promises) représentent la valeur d'une opération asynchrone qui sera résolue (fulfilled) ou rejetée (rejected).
+- Async / Await est un sucre syntaxique sur les Promesses pour écrire du code asynchrone de manière séquentielle et lisible.
+- La déstructuration (Destructuring) permet d'extraire rapidement des valeurs d'objets ou de tableaux : const { name, age } = user.
+
+Dom & Événements :
+- document.querySelector(selector) sélectionne le premier élément correspondant au sélecteur CSS.
+- element.addEventListener('click', callback) attache un écouteur d'événement sur un élément du DOM.`,
+        questions: [
+          {
+            id: "q-info-1",
+            type: "mcq",
+            question: "Quelle mot-clé ES6 est recommandé pour déclarer une variable dont la référence ne doit pas changer ?",
+            options: ["const", "let", "var", "static"],
+            answer: 0,
+            explanation: "'const' empêche la réassignation de la variable au sein de sa portée."
+          },
+          {
+            id: "q-info-2",
+            type: "mcq",
+            question: "Quelle méthode du DOM permet d'attacher un écouteur d'événement sur un bouton ?",
+            options: ["element.addEventListener()", "element.attachEvent()", "element.onEvent()", "document.listen()"],
+            answer: 0,
+            explanation: "element.addEventListener(type, listener) est la méthode standard moderne du DOM."
+          }
+        ]
+      }
+    ]
+  }
+];
