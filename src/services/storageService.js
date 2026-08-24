@@ -1,7 +1,8 @@
-import { INITIAL_DATA } from '../data/initialData';
+import { INITIAL_DATA } from '../data/initialData.js';
+import { UNIFIED_STORAGE_KEY } from './cloudSyncService.js';
 
 const STORAGE_KEYS = {
-  SUBJECTS: 'revise_cours_subjects',
+  SUBJECTS: UNIFIED_STORAGE_KEY,
   STATS: 'revise_cours_stats',
   STREAK: 'revise_cours_streak',
   SETTINGS: 'revise_cours_settings',

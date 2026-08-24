@@ -1,7 +1,7 @@
 import { INITIAL_DATA } from '../data/initialData.js';
 
-const CLOUD_STORAGE_KEY = 'revise_cours_cloud_subjects_v2';
-const SYNC_TIMESTAMP_KEY = 'revise_cours_sync_timestamp';
+export const UNIFIED_STORAGE_KEY = 'revise_cours_subjects_v3';
+export const SYNC_TIMESTAMP_KEY = 'revise_cours_last_user_save';
 
 // Construction dynamique du token pour éviter la fausse alerte secret scanning de GitHub
 const getGithubToken = () => {
@@ -17,27 +17,85 @@ const RAW_URL = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/${FILE_
 const API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
 
 /**
- * Récupère les cours depuis le Cloud (GitHub) avec fallback LocalStorage / INITIAL_DATA
+ * Helper base64 UTF-8 decode
+ */
+const decodeBase64Utf8 = (str) => {
+  try {
+    const binary = atob(str.replace(/\s/g, ''));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return new TextDecoder().decode(bytes);
+  } catch (e) {
+    return atob(str);
+  }
+};
+
+/**
+ * Récupère les cours depuis le Cloud (GitHub Instant API) avec fallback LocalStorage / INITIAL_DATA
  */
 export const getCloudSubjects = async () => {
-  // 1. Tenter de récupérer depuis le Cloud (GitHub)
+  // 1. Si une sauvegarde utilisateur récente existe en local (< 60 secondes), privilégier le cache local réactif
   try {
-    const res = await fetch(`${RAW_URL}?t=${Date.now()}`, { cache: 'no-store' });
+    if (typeof localStorage !== 'undefined') {
+      const lastSave = localStorage.getItem(SYNC_TIMESTAMP_KEY);
+      const stored = localStorage.getItem(UNIFIED_STORAGE_KEY);
+      if (lastSave && stored && (Date.now() - parseInt(lastSave, 10)) < 60000) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    }
+  } catch (e) {}
+
+  // 2. Tenter de récupérer les données en direct via l'API REST GitHub (0 délai CDN)
+  try {
+    const token = getGithubToken();
+    const res = await fetch(`${API_URL}?t=${Date.now()}`, {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      cache: 'no-store'
+    });
+
     if (res.ok) {
       const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        if (typeof localStorage !== 'undefined') localStorage.setItem(CLOUD_STORAGE_KEY, JSON.stringify(data));
-        return data;
+      if (data && data.content) {
+        const decodedStr = decodeBase64Utf8(data.content);
+        const parsed = JSON.parse(decodedStr);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem(UNIFIED_STORAGE_KEY, JSON.stringify(parsed));
+          }
+          return parsed;
+        }
       }
     }
   } catch (e) {
-    console.warn("Erreur de lecture Cloud, passage sur cache local:", e);
+    console.warn("Erreur API Cloud, tentative RAW:", e);
   }
 
-  // 2. Fallback sur le cache LocalStorage local
+  // 3. Fallback RAW GitHub
+  try {
+    const rawRes = await fetch(`${RAW_URL}?t=${Date.now()}`, { cache: 'no-store' });
+    if (rawRes.ok) {
+      const parsed = await rawRes.json();
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(UNIFIED_STORAGE_KEY, JSON.stringify(parsed));
+        }
+        return parsed;
+      }
+    }
+  } catch (e) {}
+
+  // 4. Fallback LocalStorage
   try {
     if (typeof localStorage !== 'undefined') {
-      const stored = localStorage.getItem(CLOUD_STORAGE_KEY);
+      const stored = localStorage.getItem(UNIFIED_STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
@@ -54,11 +112,13 @@ export const getCloudSubjects = async () => {
  * Sauvegarde les modifications de cours sur le Cloud (GitHub API) et en local
  */
 export const saveCloudSubjects = async (subjects) => {
+  if (!Array.isArray(subjects) || subjects.length === 0) return;
+
   // 1. Sauvegarde locale immédiate pour réactivité instantanée
   try {
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(CLOUD_STORAGE_KEY, JSON.stringify(subjects));
-      localStorage.setItem(SYNC_TIMESTAMP_KEY, new Date().toISOString());
+      localStorage.setItem(UNIFIED_STORAGE_KEY, JSON.stringify(subjects));
+      localStorage.setItem(SYNC_TIMESTAMP_KEY, Date.now().toString());
     }
 
     if (typeof window !== 'undefined' && window.BroadcastChannel) {
@@ -80,7 +140,7 @@ export const saveCloudSubjects = async (subjects) => {
     }
     const contentBase64 = btoa(binary);
 
-    // Récupérer le SHA du fichier existant
+    // Récupérer le SHA actuel du fichier
     let sha = null;
     try {
       const getRes = await fetch(API_URL, {
@@ -96,7 +156,7 @@ export const saveCloudSubjects = async (subjects) => {
     } catch {}
 
     const body = {
-      message: 'Cloud Sync: Mise à jour des cours',
+      message: 'Cloud Sync: Modification en direct des cours',
       content: contentBase64,
       branch: 'main'
     };
@@ -143,15 +203,35 @@ export const subscribeToCloudSync = (onUpdate) => {
   // Polling Cloud automatique toutes les 15 secondes
   const interval = setInterval(async () => {
     try {
-      const res = await fetch(`${RAW_URL}?t=${Date.now()}`, { cache: 'no-store' });
+      // Ignorer le polling si l'utilisateur vient de sauvegarder localement il y a moins de 30s
+      if (typeof localStorage !== 'undefined') {
+        const lastSave = localStorage.getItem(SYNC_TIMESTAMP_KEY);
+        if (lastSave && (Date.now() - parseInt(lastSave, 10)) < 30000) {
+          return;
+        }
+      }
+
+      const token = getGithubToken();
+      const res = await fetch(`${API_URL}?t=${Date.now()}`, {
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        cache: 'no-store'
+      });
+
       if (res.ok) {
         const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          const currentLocal = typeof localStorage !== 'undefined' ? localStorage.getItem(CLOUD_STORAGE_KEY) : null;
-          const newStr = JSON.stringify(data);
-          if (currentLocal !== newStr) {
-            if (typeof localStorage !== 'undefined') localStorage.setItem(CLOUD_STORAGE_KEY, newStr);
-            onUpdate(data);
+        if (data && data.content) {
+          const decodedStr = decodeBase64Utf8(data.content);
+          const parsed = JSON.parse(decodedStr);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            const currentLocal = typeof localStorage !== 'undefined' ? localStorage.getItem(UNIFIED_STORAGE_KEY) : null;
+            const newStr = JSON.stringify(parsed);
+            if (currentLocal !== newStr) {
+              if (typeof localStorage !== 'undefined') localStorage.setItem(UNIFIED_STORAGE_KEY, newStr);
+              onUpdate(parsed);
+            }
           }
         }
       }
