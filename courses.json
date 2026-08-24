@@ -7,29 +7,7 @@
     "bgColor": "bg-blue-500/10",
     "borderColor": "border-blue-500/30",
     "textColor": "text-blue-400",
-    "chapters": [
-      {
-        "id": "maths-probabilites",
-        "title": "Probabilités & Variables Aléatoires",
-        "description": "Lois de probabilité, espérance, variance et loi binomiale.",
-        "content": "Une variable aléatoire X est une application de l'univers Ω dans R.\n\nConcepts clés :\n- L'espérance E(X) représente la valeur moyenne théorique obtenue lors d'un grand nombre de répétitions. E(X) = Σ (xi * P(X = xi)).\n- La variance V(X) mesure la dispersion des valeurs autour de l'espérance. V(X) = E(X^2) - (E(X))^2 (Formule de Koenig-Huygens).\n- L'écart-type σ(X) est la racine carrée de la variance : σ(X) = √V(X).\n\nLoi Binomiale B(n, p) :\nUne épreuve de Bernoulli est une expérience à 2 issues : Succès (probabilité p) et Échec (probabilité 1-p).\nLa loi binomiale B(n, p) modélise le nombre de succès lors de n répétitions indépendantes et identiques d'une épreuve de Bernoulli.\n- P(X = k) = (n par k) * p^k * (1-p)^(n-k).\n- Espérance : E(X) = n * p.\n- Variance : V(X) = n * p * (1-p).",
-        "questions": [
-          {
-            "id": "q-math-prob-1",
-            "type": "mcq",
-            "question": "Quelle est l'espérance d'une loi binomiale B(n, p) ?",
-            "options": [
-              "E(X) = n * p",
-              "E(X) = n * p * (1-p)",
-              "E(X) = p / n",
-              "E(X) = n^2 * p"
-            ],
-            "answer": 0,
-            "explanation": "Pour une loi binomiale B(n, p), l'espérance vaut n * p."
-          }
-        ]
-      }
-    ]
+    "chapters": []
   },
   {
     "id": "histoire",
