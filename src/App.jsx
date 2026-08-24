@@ -7,6 +7,7 @@ import { RevisionSheet } from './components/RevisionSheet';
 import { AdminDashboard } from './components/AdminDashboard';
 import { StatsDashboard } from './components/StatsDashboard';
 import { AdminAuthModal } from './components/AdminAuthModal';
+import { INITIAL_DATA } from './data/initialData';
 import { 
   getStoredSubjects, saveStoredSubjects, getStoredStats, 
   recordQuizResult, getStreak, resetAllData, isAdminProtected 
@@ -15,7 +16,7 @@ import { getCloudSubjects, saveCloudSubjects, subscribeToCloudSync } from './ser
 
 export function App() {
   const [activeTab, setActiveTab] = useState('revise'); // 'revise', 'fiches', 'admin', 'stats', 'quiz', 'flashcards'
-  const [subjects, setSubjects] = useState([]);
+  const [subjects, setSubjects] = useState(INITIAL_DATA);
   const [stats, setStats] = useState({ totalQuizzes: 0, totalQuestionsAnswered: 0, correctAnswers: 0, chapterScores: {}, history: [] });
   const [streak, setStreak] = useState({ current: 1 });
 
@@ -29,8 +30,14 @@ export function App() {
   useEffect(() => {
     // Initial Load from Cloud Sync / Local Cache
     const loadInitialData = async () => {
-      const loaded = await getCloudSubjects();
-      setSubjects(loaded);
+      try {
+        const loaded = await getCloudSubjects();
+        if (Array.isArray(loaded) && loaded.length > 0) {
+          setSubjects(loaded);
+        }
+      } catch (err) {
+        console.warn("Falling back to INITIAL_DATA on load:", err);
+      }
       setStats(getStoredStats());
       setStreak(getStreak());
     };
@@ -39,7 +46,9 @@ export function App() {
 
     // Subscribe to live updates across screens / devices / tabs
     const unsubscribe = subscribeToCloudSync((updatedSubjects) => {
-      setSubjects(updatedSubjects);
+      if (Array.isArray(updatedSubjects) && updatedSubjects.length > 0) {
+        setSubjects(updatedSubjects);
+      }
     });
 
     return () => unsubscribe();

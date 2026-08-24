@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Calculator, Globe, Dna, Code, BookOpen, Layers, 
   Sparkles, Zap, Brain, CheckCircle2, ArrowRight, PlusCircle, Search, Clock
@@ -13,20 +13,38 @@ const ICON_MAP = {
   Layers: Layers
 };
 
-export const SubjectSelector = ({ subjects, onStartRevision, onGoToAdmin }) => {
-  const [selectedSubjectId, setSelectedSubjectId] = useState(subjects[0]?.id || '');
-  const [selectedChapterId, setSelectedChapterId] = useState(subjects[0]?.chapters[0]?.id || '');
-  const [selectedMode, setSelectedMode] = useState('mcq'); // 'mcq', 'flashcards', 'truefalse', 'sheet'
+export const SubjectSelector = ({ subjects = [], onStartRevision, onGoToAdmin }) => {
+  const safeSubjects = Array.isArray(subjects) && subjects.length > 0 ? subjects : [];
+
+  const [selectedSubjectId, setSelectedSubjectId] = useState(safeSubjects[0]?.id || '');
+  const [selectedChapterId, setSelectedChapterId] = useState(safeSubjects[0]?.chapters?.[0]?.id || '');
+  const [selectedMode, setSelectedMode] = useState('mcq'); // 'mcq', 'flashcards', 'truefalse'
   const [searchQuery, setSearchQuery] = useState('');
 
-  const currentSubject = subjects.find(s => s.id === selectedSubjectId) || subjects[0];
-  
-  const filteredSubjects = subjects.filter(s => 
-    s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    s.chapters.some(c => c.title.toLowerCase().includes(searchQuery.toLowerCase()))
+  useEffect(() => {
+    if (safeSubjects.length > 0) {
+      const exists = safeSubjects.some(s => s.id === selectedSubjectId);
+      if (!selectedSubjectId || !exists) {
+        const firstSubj = safeSubjects[0];
+        setSelectedSubjectId(firstSubj.id);
+        const chaps = Array.isArray(firstSubj.chapters) ? firstSubj.chapters : [];
+        if (chaps.length > 0) {
+          setSelectedChapterId(chaps[0].id);
+        }
+      }
+    }
+  }, [safeSubjects, selectedSubjectId]);
+
+  const filteredSubjects = safeSubjects.filter(s => 
+    s && s.name && (
+      s.name.toLowerCase().includes((searchQuery || '').toLowerCase()) ||
+      (Array.isArray(s.chapters) && s.chapters.some(c => c && c.title && c.title.toLowerCase().includes((searchQuery || '').toLowerCase())))
+    )
   );
 
-  const currentChapter = currentSubject?.chapters.find(c => c.id === selectedChapterId) || currentSubject?.chapters[0];
+  const currentSubject = safeSubjects.find(s => s.id === selectedSubjectId) || safeSubjects[0] || null;
+  const currentSubjectChapters = Array.isArray(currentSubject?.chapters) ? currentSubject.chapters : [];
+  const currentChapter = currentSubjectChapters.find(c => c.id === selectedChapterId) || currentSubjectChapters[0] || null;
 
   const renderIcon = (iconName, className = "w-6 h-6") => {
     const IconComp = ICON_MAP[iconName] || BookOpen;
@@ -82,30 +100,31 @@ export const SubjectSelector = ({ subjects, onStartRevision, onGoToAdmin }) => {
           <div className="space-y-3">
             {filteredSubjects.map((subj) => {
               const isSelected = subj.id === selectedSubjectId;
+              const chapsCount = Array.isArray(subj.chapters) ? subj.chapters.length : 0;
               return (
                 <div
                   key={subj.id}
                   onClick={() => {
                     setSelectedSubjectId(subj.id);
-                    if (subj.chapters.length > 0) {
+                    if (chapsCount > 0) {
                       setSelectedChapterId(subj.chapters[0].id);
                     }
                   }}
                   className={`p-4 rounded-2xl cursor-pointer transition-all duration-200 glass-panel-hover border ${
                     isSelected
-                      ? `bg-slate-900/95 ${subj.borderColor} shadow-lg ring-1 ring-indigo-500/40`
+                      ? `bg-slate-900/95 ${subj.borderColor || 'border-indigo-500'} shadow-lg ring-1 ring-indigo-500/40`
                       : 'bg-slate-900/50 border-slate-800/80 opacity-90'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3.5">
-                      <div className={`p-3 rounded-xl bg-gradient-to-br ${subj.color} text-white shadow-md`}>
+                      <div className={`p-3 rounded-xl bg-gradient-to-br ${subj.color || 'from-indigo-600 to-purple-600'} text-white shadow-md`}>
                         {renderIcon(subj.icon)}
                       </div>
                       <div>
                         <h3 className="font-bold text-white text-base">{subj.name}</h3>
                         <p className="text-xs text-slate-400 font-medium">
-                          {subj.chapters.length} chapitre{subj.chapters.length > 1 ? 's' : ''} disponible{subj.chapters.length > 1 ? 's' : ''}
+                          {chapsCount} chapitre{chapsCount > 1 ? 's' : ''} disponible{chapsCount > 1 ? 's' : ''}
                         </p>
                       </div>
                     </div>
@@ -126,16 +145,16 @@ export const SubjectSelector = ({ subjects, onStartRevision, onGoToAdmin }) => {
           <div className="glass-panel p-6 rounded-2xl border border-slate-800/80">
             <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-indigo-400" />
-              Sélectionnez un Chapitre ({currentSubject?.name})
+              Sélectionnez un Chapitre ({currentSubject?.name || 'Matière'})
             </h2>
 
-            {currentSubject?.chapters.length === 0 ? (
+            {currentSubjectChapters.length === 0 ? (
               <div className="text-center py-8 text-slate-400 space-y-3">
                 <p>Aucun chapitre dans cette matière.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                {currentSubject?.chapters.map((chap) => {
+                {currentSubjectChapters.map((chap) => {
                   const isChapSelected = chap.id === selectedChapterId;
                   return (
                     <div
