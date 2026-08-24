@@ -9,51 +9,6 @@
     "textColor": "text-blue-400",
     "chapters": [
       {
-        "id": "maths-fonctions",
-        "title": "Fonctions & Dérivées",
-        "description": "Limites, étude de variations, théorèmes des valeurs intermédiaires et dérivation.",
-        "content": "Une fonction f est dite dérivable sur un intervalle I si elle admet une dérivée f'(x) en tout point x de cet intervalle.\n\nDéfinitions fondamentales :\n- La dérivée d'une fonction f au point a représente le coefficient directeur de la tangente à la courbe en ce point.\n- Formule de la dérivée du produit : (u * v)' = u'v + uv'.\n- Formule de la dérivée du quotient : (u / v)' = (u'v - uv') / v^2.\n- La dérivée de x^n est n * x^(n-1).\n- La dérivée de e^x est e^x.\n- La dérivée de ln(x) est 1/x pour x > 0.\n\nThéorème des Valeurs Intermédiaires (TVI) :\nSi f est une fonction continue sur un intervalle [a, b], alors pour tout réel k compris entre f(a) et f(b), il existe au moins un réel c dans [a, b] tel que f(c) = k. Si la fonction est strictly monotone, ce réel c est unique (Corollaire du TVI).\n\nExtremum local :\nSi f'(x) s'annule en x0 en changeant de signe, alors f admet un extremum local en x0 (maximum si f' passe de positif à négatif, minimum si f' passe de négatif à positif).",
-        "questions": [
-          {
-            "id": "q-math-1",
-            "type": "mcq",
-            "question": "Quelle est la dérivée de la fonction f(x) = x^3 - 4x + 7 ?",
-            "options": [
-              "f'(x) = 3x^2 - 4",
-              "f'(x) = 3x^2 - 4x",
-              "f'(x) = x^2 - 4",
-              "f'(x) = 3x^3 - 4"
-            ],
-            "answer": 0,
-            "explanation": "La dérivée de x^3 est 3x^2, la dérivée de -4x est -4, et la dérivée d'une constante (7) est 0. Donc f'(x) = 3x^2 - 4."
-          },
-          {
-            "id": "q-math-2",
-            "type": "mcq",
-            "question": "Quelle est la formule correcte pour la dérivée d'un produit (u * v)' ?",
-            "options": [
-              "u'v + uv'",
-              "u'v - uv'",
-              "u' * v'",
-              "(u'v + uv') / v^2"
-            ],
-            "answer": 0,
-            "explanation": "La formule d'un produit de deux fonctions dérivables est (u*v)' = u'v + uv'."
-          },
-          {
-            "id": "q-math-3",
-            "type": "truefalse",
-            "question": "La dérivée de la fonction exponentielle e^x est égale à 1/x.",
-            "options": [
-              "Vrai",
-              "Faux"
-            ],
-            "answer": 1,
-            "explanation": "C'est Faux ! La dérivée de e^x est elle-même (e^x). C'est la dérivée de ln(x) qui vaut 1/x."
-          }
-        ]
-      },
-      {
         "id": "maths-probabilites",
         "title": "Probabilités & Variables Aléatoires",
         "description": "Lois de probabilité, espérance, variance et loi binomiale.",
