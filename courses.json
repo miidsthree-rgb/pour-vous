@@ -120,50 +120,5 @@
         ]
       }
     ]
-  },
-  {
-    "id": "informatique",
-    "name": "Informatique & Web",
-    "icon": "Code",
-    "color": "from-purple-600 to-indigo-500",
-    "bgColor": "bg-purple-500/10",
-    "borderColor": "border-purple-500/30",
-    "textColor": "text-purple-400",
-    "chapters": [
-      {
-        "id": "info-js",
-        "title": "JavaScript Moderne (ES6+)",
-        "description": "Variables, Promesses, Async/Await, modules et manipulation du DOM.",
-        "content": "JavaScript est un langage de programmation interprété, à typage dynamique et orienté objet à prototypes, principalement utilisé pour dynamiser le Web.\n\nNotions clés ES6+ :\n- Déclaration de variables : 'const' pour les constantes non réassignables, 'let' pour les variables à portée de bloc (block scope). Éviter 'var' (portée de fonction, hoisting).\n- Fonctions fléchées : (param) => { ... } offrent une syntaxe concis et lient lexicalement 'this'.\n- Les Promesses (Promises) représentent la valeur d'une opération asynchrone qui sera résolue (fulfilled) ou rejetée (rejected).\n- Async / Await est un sucre syntaxique sur les Promesses pour écrire du code asynchrone de manière séquentielle et lisible.\n- La déstructuration (Destructuring) permet d'extraire rapidement des valeurs d'objets ou de tableaux : const { name, age } = user.\n\nDom & Événements :\n- document.querySelector(selector) sélectionne le premier élément correspondant au sélecteur CSS.\n- element.addEventListener('click', callback) attache un écouteur d'événement sur un élément du DOM.",
-        "questions": [
-          {
-            "id": "q-info-1",
-            "type": "mcq",
-            "question": "Quelle mot-clé ES6 est recommandé pour déclarer une variable dont la référence ne doit pas changer ?",
-            "options": [
-              "const",
-              "let",
-              "var",
-              "static"
-            ],
-            "answer": 0,
-            "explanation": "'const' empêche la réassignation de la variable au sein de sa portée."
-          },
-          {
-            "id": "q-info-2",
-            "type": "mcq",
-            "question": "Quelle méthode du DOM permet d'attacher un écouteur d'événement sur un bouton ?",
-            "options": [
-              "element.addEventListener()",
-              "element.attachEvent()",
-              "element.onEvent()",
-              "document.listen()"
-            ],
-            "answer": 0,
-            "explanation": "element.addEventListener(type, listener) est la méthode standard moderne du DOM."
-          }
-        ]
-      }
-    ]
   }
 ]
