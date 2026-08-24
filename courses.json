@@ -28,5 +28,15 @@
     "borderColor": "border-indigo-500/30",
     "textColor": "text-indigo-400",
     "chapters": []
+  },
+  {
+    "id": "subj-1787607933126",
+    "name": "physique & chimie",
+    "icon": "BookOpen",
+    "color": "from-indigo-600 to-purple-500",
+    "bgColor": "bg-indigo-500/10",
+    "borderColor": "border-indigo-500/30",
+    "textColor": "text-indigo-400",
+    "chapters": []
   }
 ]
